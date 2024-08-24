@@ -4,16 +4,13 @@ import {
   FlatList,
   StyleSheet,
   Button,
-  View
+  View,
+  Keyboard
 } from 'react-native';
 import React, { useState } from 'react';
 
 const ToDo = () => {
-  const [todos, setTodos] = useState([
-    { id: 1, title: 'First' },
-    { id: 2, title: 'Second' },
-    { id: 3, title: 'Third' }
-  ]);
+  const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
 
   const handleSubmit = () => {
@@ -24,6 +21,7 @@ const ToDo = () => {
       };
       setTodos([...todos, newTodo]);
       setText('');
+      Keyboard.dismiss();
     }
   };
 
@@ -34,7 +32,13 @@ const ToDo = () => {
 
   return (
     <View>
-      <TextInput style={styles.input} value={text} onChangeText={setText} />
+      <Text style={styles.header}>TODO</Text>
+      <TextInput
+        style={styles.input}
+        value={text}
+        onChangeText={setText}
+        selectionColor="#000"
+      />
       <View style={styles.buttonContainer}>
         <Button title="Submit" onPress={handleSubmit} />
       </View>
@@ -44,7 +48,7 @@ const ToDo = () => {
       <FlatList
         data={todos}
         renderItem={({ item }) => (
-          <View style={styles.buttonContainer}>
+          <View style={styles.todoItem}>
             <Text style={styles.title}>{item.title}</Text>
             <Button
               title="delete"
@@ -73,6 +77,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold'
+  },
+  todoItem: {
+    borderColor: '#B0B0B0',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 5
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
 
