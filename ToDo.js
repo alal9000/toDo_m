@@ -8,11 +8,45 @@ import {
   Keyboard
 } from 'react-native';
 import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ToDo = () => {
+  // component state
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
 
+  // effect hooks
+  useEffect(() => {
+    // Load todos from AsyncStorage when the component mounts
+    const loadTodos = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('todos');
+        if (jsonValue != null) {
+          setTodos(JSON.parse(jsonValue));
+        }
+      } catch (e) {
+        console.error('Failed to load todos:', e);
+      }
+    };
+
+    loadTodos();
+  }, []);
+
+  useEffect(() => {
+    // Save todos to AsyncStorage whenever the todos state changes
+    const saveTodos = async () => {
+      try {
+        const jsonValue = JSON.stringify(todos);
+        await AsyncStorage.setItem('todos', jsonValue);
+      } catch (e) {
+        console.error('Failed to save todos:', e);
+      }
+    };
+
+    saveTodos();
+  }, [todos]);
+
+  // event handlers
   const handleSubmit = () => {
     if (text) {
       const newTodo = {

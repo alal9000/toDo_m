@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "todo_m",
+    "name": "todo",
     "slug": "todo_m",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/peng.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,12 +16,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/peng.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.lucidlear.todo_m"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ed947671-92f8-4859-b7a4-0b91f3466d25"
+      }
     }
   }
 }
