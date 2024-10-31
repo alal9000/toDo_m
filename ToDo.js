@@ -5,27 +5,27 @@ import {
   StyleSheet,
   Button,
   View,
-  Keyboard
-} from 'react-native';
-import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+  Keyboard,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ToDo = () => {
   // component state
   const [todos, setTodos] = useState([]);
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
   // effect hooks
   useEffect(() => {
     // Load todos from AsyncStorage when the component mounts
     const loadTodos = async () => {
       try {
-        const jsonValue = await AsyncStorage.getItem('todos');
+        const jsonValue = await AsyncStorage.getItem("todos");
         if (jsonValue != null) {
           setTodos(JSON.parse(jsonValue));
         }
       } catch (e) {
-        console.error('Failed to load todos:', e);
+        console.error("Failed to load todos:", e);
       }
     };
 
@@ -37,9 +37,9 @@ const ToDo = () => {
     const saveTodos = async () => {
       try {
         const jsonValue = JSON.stringify(todos);
-        await AsyncStorage.setItem('todos', jsonValue);
+        await AsyncStorage.setItem("todos", jsonValue);
       } catch (e) {
-        console.error('Failed to save todos:', e);
+        console.error("Failed to save todos:", e);
       }
     };
 
@@ -51,10 +51,10 @@ const ToDo = () => {
     if (text) {
       const newTodo = {
         id: todos.length + 1,
-        title: text
+        title: text,
       };
       setTodos([...todos, newTodo]);
-      setText('');
+      setText("");
       Keyboard.dismiss();
     }
   };
@@ -103,27 +103,27 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderWidth: 1,
-    padding: 10
+    padding: 10,
   },
   buttonContainer: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   todoItem: {
-    borderColor: '#B0B0B0',
+    borderColor: "#B0B0B0",
     borderWidth: 1,
     marginBottom: 10,
-    padding: 5
+    padding: 5,
   },
   header: {
     fontSize: 24,
     marginBottom: 20,
-    fontWeight: 'bold',
-    textAlign: 'center'
-  }
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
 
 export default ToDo;
